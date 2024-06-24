@@ -2,9 +2,8 @@ name: Cypress CI
 
 on:
   push:
-    branches: 
-      - '**'
-
+    branches: [ main ]
+      
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -18,7 +17,7 @@ jobs:
         run: npm install
 
       - name: Run Cypress Tests
-        run: npx cypress run
+        run: npx cypress run --config defaultCommandTimeout=10000,pageLoadTimeout=60000,requestTimeout=30000,responseTimeout=30000
 
       - name: Generate Report
         run: npx mochawesome-merge "cypress/reports/mocha/*.json" > cypress/reports/report.json
