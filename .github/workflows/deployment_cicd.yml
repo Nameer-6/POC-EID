@@ -22,14 +22,11 @@ jobs:
 
       - name: Run Cypress Tests
         run: npx cypress run
-        continue-on-error: true
 
       - name: Generate Report
-        if: always()
         run: npx mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/report.json
 
       - name: Upload Test Report
-        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-reports
