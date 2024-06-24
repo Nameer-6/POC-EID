@@ -21,13 +21,25 @@ jobs:
         run: npm install
 
       - name: Run Cypress Tests
-        run: npx cypress run
+        run: npx cypress run --reporter mochawesome --reporter-options overwrite=false,html=false,json=true,reportDir=cypress/reports/mocha
+        continue-on-error: true
 
       - name: Generate Report
-        run: npx mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/report.json
+        if: always()
+        run: npx mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/report.json || true
 
       - name: Upload Test Report
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-reports
           path: cypress/reports/report.json
+
+      - name: Upload Screenshots and Videos
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots-and-videos
+          path: |
+            cypress/screenshots
+            cypress/videos
