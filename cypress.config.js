@@ -8,6 +8,13 @@ module.exports = defineConfig({
         defaultCommandTimeout: 35000,
         viewportWidth: 1920,  // Set the viewport width to 1920 pixels
         viewportHeight: 1080, // Set the viewport height to 1080 pixels
+        reporter: 'mochawesome',
+        reporterOptions: {
+            reportDir: 'cypress/reports',
+            overwrite: false,
+            html: true,
+            json: true,
+        },
         setupNodeEvents(on, config) {
             on('file:preprocessor', cucumber({
                 resolveStepDefinition(definition) {
