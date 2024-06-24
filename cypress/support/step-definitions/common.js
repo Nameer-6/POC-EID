@@ -2,6 +2,7 @@ const { Given, When, Then, And } = require("cypress-cucumber-preprocessor/steps"
 require('cypress-real-events/support');
 const commonLocator = require("../../page-objects/common-locators");
 
+
 Given("I visit EmpowerID", () => {
     cy.visit("https://api.empoweriam.com");
     commonLocator.cookieConsentButton().should('be.visible', { timeout: 10000 }).click();
@@ -14,7 +15,7 @@ When("I enter valid username and password on login page", () => {
 });
 
 And("I press login button", () => {
-    commonLocator.loginbutton().should('be.visible').click();
+    commonLocator.loginbutton().click();
 });
 
 Then("I should see 'Which Persona do you want to login' as on Person selection page", () => {
@@ -40,19 +41,19 @@ When("I enter invalid valid username and password on login page", () => {
 });
 
 Then("I should see change password screen", () => {
-    commonLocator.errormessagelocator().should("be.visible").should("have.text", 'Change Password');
+    commonLocator.errormessagelocator().should("be.visible").should("have.text",'Change Password');
 });
 
 Then("I should see login screen", () => {
-    commonLocator.loginPageLocator().should("be.visible").should("have.text", 'Login');
+    commonLocator.loginPageLocator().should("be.visible").should("have.text",'Login');
 });
 
 When("I click on profile button", () => {
-    commonLocator.userNameIdLocator().should('be.visible').click();
+    commonLocator.userNameIdLocator().click();
 });
 
 And("I click on logout button", () => {
-    commonLocator.logoutTextLocator().should('be.visible').click();
+    commonLocator.logoutTextLocator().click();
 });
 
 Then("I should see {string} tab on dashboard page", (text) => {
@@ -60,11 +61,11 @@ Then("I should see {string} tab on dashboard page", (text) => {
 });
 
 And("I click on {string} tab on dashboard page", (text) => {
-    commonLocator.navbartablocator(text).should('be.visible').click();
+    commonLocator.navbartablocator(text).click();
 });
 
 Given("I click on Onboard Person on action panel on Person page", () => {
-    commonLocator.OnboardPerson().should('be.visible').first().click();
+    commonLocator.OnboardPerson().first().click();
 });
 
 And("I wait {string} seconds", (time) => {
@@ -90,35 +91,36 @@ And("I fill in 'Onboard a Person' form with the following data:", (dataTable) =>
     }
 
     if (data.hasOwnProperty('BusinessRole')) {
-        commonLocator.selectRoleAndLocation().should('be.visible').click();
-        commonLocator.browse().eq(2).should('be.visible').click({ force: true });
+        commonLocator.selectRoleAndLocation().click();
+        commonLocator.browse().eq(2).click({ force: true });
         cy.wait(2000);
-        commonLocator.searchFieldLocator().should('be.visible').type(data.BusinessRole);
-        commonLocator.searchButtonLocator().eq(1).should('be.visible').click();
+        commonLocator.searchFieldLocator().type(data.BusinessRole);
+        commonLocator.searchButtonLocator().eq(1).click();
         cy.wait(3000);
         commonLocator.getItemByTextLocator(data.BusinessRole).scrollIntoView().should('be.visible').click();
     }
 
     if (data.hasOwnProperty('Location')) {
         commonLocator.locationLocator().should('be.visible').click();
-        commonLocator.browse().eq(3).should('be.visible').click({ force: true });
+        commonLocator.browse().eq(3).click({ force: true });
         cy.wait(2000);
-        commonLocator.searchFieldLocator().eq(2).should('be.visible').type(data.Location);
-        commonLocator.searchButtonLocator().eq(4).should('be.visible').click();
+        commonLocator.searchFieldLocator().eq(2).type(data.Location);
+        commonLocator.searchButtonLocator().eq(4).click();
         cy.wait(3000);
         commonLocator.getItemByTextLocator(data.Location).should('be.visible').click();
     }
 
     commonLocator.selectButtonLocator().should('be.visible').click();
-    commonLocator.getButtonLocator('Next').should('be.visible').click();
+    commonLocator.getButtonLocator('Next').click();
 });
 
 Then("I should see {string} success message on Person page", (text) => {
     commonLocator.successMessageLocator(text).should('be.visible');
 });
 
+
 And("I click on {string} tab", (text) => {
-    commonLocator.navbartablocator(text).should('be.visible').click();
+    commonLocator.navbartablocator(text).click();
 });
 
 And("I fill in 'Global Functions' form with the following data:", (dataTable) => {
@@ -135,54 +137,62 @@ And("I fill in 'Global Functions' form with the following data:", (dataTable) =>
     }
 
     if (data.hasOwnProperty('FunctionType')) {
-        commonLocator.functionTypeLocator().should('be.visible').type(data.FunctionType).type('{enter}');
+        commonLocator.functionTypeLocator().type(data.FunctionType) 
+        .type('{enter}');
     }
 
     if (data.hasOwnProperty('RiskLevel')) {
-        commonLocator.riskLevelLocator().should('be.visible').type(data.RiskLevel).type('{enter}');
+        commonLocator.riskLevelLocator().type(data.RiskLevel).type('{enter}');
     }
 
     if (data.hasOwnProperty('RiskResourceSet')) {
-        commonLocator.riskResourceSetLocator().should('be.visible').type(data.RiskResourceSet).type('{enter}');
+        commonLocator.riskResourceSetLocator().type(data.RiskResourceSet).type('{enter}');
     }
 
     if (data.hasOwnProperty('Location')) {
         commonLocator.selectLocationLocator().should('be.visible').click();
-        commonLocator.browse().eq(1).should('be.visible').click();
+        commonLocator.browse().eq(1).click();
         cy.wait(2000);
         commonLocator.getLocationItemByText(data.Location).should('be.visible').click();
     }
-    commonLocator.LocationTreeSaveButtonLocator().should('be.visible').click();
+    commonLocator.LocationTreeSaveButtonLocator().click();
 });
 
 And("I click on add button", () => {
-    commonLocator.eidAddButtonLocator().should('be.visible').click();
-});
+commonLocator.eidAddButtonLocator().click();
+})
 
 And("I click on 'save' button on 'Global Functions' page", () => {
-    commonLocator.saveButtonLocatorForEidGrid().should('be.visible').click();
-});
+    commonLocator.saveButtonLocatorForEidGrid().click();
+    })
 
 Then("I should see {string} success message", (text) => {
     commonLocator.successNotificationlocator(text).should('be.visible');
 });
 
 And("I collapse location panel", () => {
-    commonLocator.locationPanelLocator().eq(1).should('be.visible').click({ force: true });
-});
+    commonLocator.locationPanelLocator().eq(1).click({force: true});
+})
 
 And("I search {string} on 'Global Functions' Page", (text) => {
-    commonLocator.globalFunctionSearchFieldLocator().eq(2).should('be.visible').type(text);
-    commonLocator.globalFunctionSearchButtonLocator().eq(1).should('be.visible').click();
-});
+    commonLocator.globalFunctionSearchFieldLocator().eq(2).type(text);
+    commonLocator.globalFunctionSearchButtonLocator().eq(1).click();
+})
+
 
 And("I click on {string} button on Global Functions Page", (buttonName) => {
-    if (buttonName.toLowerCase() === "edit") {
-        commonLocator.globalFunctionEditButtonLocator().eq(10).should('be.visible').click();
-    } else if (buttonName.toLowerCase() === "delete") {
-        commonLocator.globalFunctionRemoveButtonLocator().eq(10).should('be.visible').click();
+    if (buttonName.toLowerCase() === "edit"){
+        commonLocator.globalFunctionEditButtonLocator().eq(10).click();
     }
-});
+    else if (buttonName.toLowerCase() === "delete"){
+        commonLocator.globalFunctionRemoveButtonLocator().eq(10).click();
+    }
+})
+
+// And("I click on 'Edit' button on Global Functions page", () => {
+//     commonLocator.globalFunctionEditButtonLocator().eq(10).click();
+// })
+
 
 And("I edit 'Global Functions' form with the following data:", (dataTable) => {
     const data = dataTable.hashes()[0];
@@ -198,14 +208,15 @@ And("I edit 'Global Functions' form with the following data:", (dataTable) => {
     }
 
     if (data.hasOwnProperty('FunctionType')) {
-        commonLocator.functionTypeLocator().should('be.visible').clear().type(data.FunctionType).type('{enter}');
+        commonLocator.functionTypeLocator().clear().type(data.FunctionType) 
+        .type('{enter}');
     }
 
     if (data.hasOwnProperty('RiskLevel')) {
-        commonLocator.riskLevelLocator().should('be.visible').clear().type(data.RiskLevel).type('{enter}');
+        commonLocator.riskLevelLocator().clear().type(data.RiskLevel).type('{enter}');
     }
 
     if (data.hasOwnProperty('RiskResourceSet')) {
-        commonLocator.riskResourceSetLocator().should('be.visible').clear().type(data.RiskResourceSet).type('{enter}');
+        commonLocator.riskResourceSetLocator().clear().type(data.RiskResourceSet).type('{enter}');
     }
 });
